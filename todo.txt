@@ -1,0 +1,10 @@
+if course is scheduled on friday, pick any slot on any other day as the mirror
+take the next exisiting course and reserve the timeslot for after that course
+next, loop through all the courses if the reserved slot is conflicting with any other course.
+if yes, take the conflicting course and reserve for the timeslot next of that
+if end of day reached, try the next day
+if($courses['day'] == 4) {
+
+} else {
+    $coursesCopy['day'] += 2;
+}
