@@ -14,27 +14,41 @@
     "WED",
     "THU",
     "FRI",
-    "SAT",
-    "SUN"
   ]);
 
+  #reads the local data file on courses and write the data onto an array
   function fileToArray() {
     #fopen() opens and reads file
     $coursesFile = fopen('courses.txt', 'r') or die("Unable to open file!");
+    #initialize course key array for categorizing the course data
     $coursesKeys = array('courseid','timeslot','day');
-    $courseArray = [];
+    #initialize course data array
+    $coursesArray = [];
 
     #reads the file line-by-line until the end of the file:
     while(!feof($coursesFile)) {
+      #takes a line of data from the file and seperates each data and pushes the data into an array
       $coursesLine = explode(",", fgets($coursesFile));
-      array_push($courseArray, array_combine($coursesKeys, $coursesLine));
+      
+      #combines the course key array and data array into an associative course array
+      $coursesAssoc = array_combine($coursesKeys, $coursesLine);
+
+      #pushes the data array into a multidimensional courses array
+      array_push($courseArray, $coursesAssoc);
+
+      #creates a copy of a course as to make 2 meetings 
+      $coursesCopy = $coursesAssoc;
+      $coursesCopy['day'] += 2;
+
+      #pushes the copy into the multidimensional courses array
+      array_push($courseArray, $coursesCopy);
     }
+    // print_r($coursesArray);
     fclose($coursesFile);
-    return $courseArray;
-  }
-  function mirrorCourse() {
+    return $coursesArray;
   }
 
+  #prints the table with the course data 
   function printCourse($coursesArray) {
     $entry = 0;
     $j = 0;
