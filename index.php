@@ -1,3 +1,4 @@
+<!-- CODER:Syahmi -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +13,19 @@
 
 <body>
   <h1>TIMETABLE</h1>
+  
   <table class="center">
-  <?php
-    printCourse($coursesArray);
-  ?>
+  <?php printCourse($coursesArray); ?>
+  </table>
+  <br>
+
+  <table class="center">
+    <tr>
+      <th>Course ID</th>
+      <th>Time</th>
+      <th>Day</th>
+    </tr>
+  <?php printList($coursesArray); ?>
   </table>
 </body>
 </html>
