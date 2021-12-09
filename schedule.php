@@ -1,4 +1,9 @@
 <?php
+#Naim: fileToArray();
+#Wani: printCourse();
+#Mohamed: printList();
+#Hareez: CSS
+#Syahmi: Local storage and index.php
   define("time", [
     "Days",
     "8:30-9:50",
@@ -16,7 +21,8 @@
     "FRI",
   ]);
 
-  #reads the local data file on courses and write the data onto an array
+  #CODER: Naim
+  #this function reads the local data file on courses and write the data onto an array
   function fileToArray() {
     #fopen() opens and reads file
     $coursesFile = fopen('courses.txt', 'r') or die("Unable to open file!");
@@ -34,37 +40,41 @@
       $coursesAssoc = array_combine($coursesKeys, $coursesLine);
 
       #pushes the data array into a multidimensional courses array
-      array_push($courseArray, $coursesAssoc);
+      array_push($coursesArray, $coursesAssoc);
 
       #creates a copy of a course as to make 2 meetings 
       $coursesCopy = $coursesAssoc;
       $coursesCopy['day'] += 2;
 
       #pushes the copy into the multidimensional courses array
-      array_push($courseArray, $coursesCopy);
+      array_push($coursesArray, $coursesCopy);
     }
-    // print_r($coursesArray);
     fclose($coursesFile);
     return $coursesArray;
   }
 
+  #CODER: Wani
   #prints the table with the course data 
   function printCourse($coursesArray) {
-    $entry = 0;
-    $j = 0;
     echo "<tr>";
+    #prints each timeslot
     foreach (time as $timeslot) {
       echo "<th>$timeslot</th>";
     }
     echo "</tr>";
 
+    #loops printing out each day
     foreach (days as $day) {
       echo "<tr>
         <td>$day<td>";
+
+      #loops each slot for the courses per day 
       for($slot = 1; $slot < 5; $slot++) {
+        #makes a special column for lunch timeslot for the week
         if (strcmp($day,'MON') === 0 && $slot === 3) {
           echo "<td class=\"lunch\" rowspan=\"7\">LUNCH</td>";
         }
+        #prints out the slots
         else {
           echo "<td></td>";
         }
@@ -73,7 +83,19 @@
 
     }
   }
-  
+
+  #CODER: Mohammed
+  #prints total courses (with duplicates on other days)
+  function printList($coursesArray) {
+    #prints each course data and loops
+    foreach ($coursesArray as $course) {
+      echo "<tr>
+      <td>$course[courseid]</td>
+      <td>$course[timeslot]</td>
+      <td>$course[day]</td>
+      </tr>";
+    }
+  }
 $coursesArray = fileToArray();
 ?>
 
